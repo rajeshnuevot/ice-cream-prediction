@@ -46,4 +46,8 @@ networks:
   pred-network:
     driver: bridge # a user defined bridge is required; the default bridge network doesn't support name resolution
 
-  
+volumes:
+   redisdata:
+      driver: local 
+   mongo-data:
+      driver: local 

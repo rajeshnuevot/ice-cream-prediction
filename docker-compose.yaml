@@ -1,0 +1,40 @@
+#docker compose for pred app
+version: "3.9"
+services:
+  pred-appserver:
+    image: ${docker-registry}/pred-backendapp:1.0
+    restart: always
+    depends_on:
+      - redis-server
+      - pred-db
+    ports:
+      - 80:80
+    networks:
+      - pred-network
+
+  redis-server:
+    image: redis:6.2.1-alpine
+    restart: always
+    networks:
+      - pred-network
+    volumes:
+     - redisdata:/data
+
+  pred-db:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - pred-network
+
+networks:
+  pred-network:
+    driver: bridge # a user defined bridge is required; the default bridge network doesn't support name resolution
+
+  

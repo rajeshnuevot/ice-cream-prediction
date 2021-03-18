@@ -26,10 +26,10 @@ services:
     ports:
       - 27017:27017
     environment:
-       MONGODB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+       MONGODB_USERNAME_FILE: /run/secrets/db_username
        MONGODB_PASSWORD_FILE: /run/secrets/db_password
     secrets:
-       - db_root_password
+       - db_username
        - db_password
     volumes:
       - mongo-data:/data/db
@@ -37,10 +37,10 @@ services:
       - pred-network
 
 secrets:
+   db_username:
+     file: db_username.txt
    db_password:
      file: db_password.txt
-   db_root_password:
-     file: db_root_password.txt
 
 networks:
   pred-network:

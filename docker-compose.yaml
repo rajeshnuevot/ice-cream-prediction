@@ -26,12 +26,21 @@ services:
     ports:
       - 27017:27017
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
+       MONGODB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+       MONGODB_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+       - db_root_password
+       - db_password
     volumes:
       - mongo-data:/data/db
     networks:
       - pred-network
+
+secrets:
+   db_password:
+     file: db_password.txt
+   db_root_password:
+     file: db_root_password.txt
 
 networks:
   pred-network:
